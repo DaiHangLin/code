@@ -17,7 +17,9 @@ https://commonsware.com/Android/previews/screenshots-and-screen-recordings
  + 多条业务线 => 同一个业务 => 处理不同业务 (避免进行传值的if else 操作)
    
     yield call(a) => yield call(common) => yield call(aNext)
+    
     yield call(b) => yield call(common) => yield call(bNext)
+    
     yield call(c) => yield call(common) => yield call(cNext)
     
  
