@@ -22,5 +22,7 @@ https://commonsware.com/Android/previews/screenshots-and-screen-recordings
     
     yield call(c) => yield call(common) => yield call(cNext)
     
+ +  使用函数来处理UI，使用新特性hook，但是hook应该只和ui的状态有关，不应该处理过多的业务逻辑
+    
  
 
