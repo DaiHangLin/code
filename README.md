@@ -25,6 +25,11 @@ https://commonsware.com/Android/previews/screenshots-and-screen-recordings
  +  使用函数来处理UI，使用新特性hook，但是hook应该只和ui的状态有关，不应该处理过多的业务逻辑
  
  +  单一数据来源 =>  不在store中存储两份一样的数据，同样的数据只保留一份，其他应该保留对这份数据的索引
+
+
+### 编程风格
+ 
+ +  悲观性编程 => 考虑失败的场景，边界值，特殊输入，null等
     
  
 
