@@ -58,10 +58,10 @@ https://commonsware.com/Android/previews/screenshots-and-screen-recordings
     
     +  put  vs  call
     
-       put  =>  put一个action，立马完成，执行下一步
-       
-       call =>  启动一个saga，会block住ui，后续代码会等待这个saga结束
-         
+          put  =>  put一个action，立马完成，执行下一步
+
+          call =>  启动一个saga，会block住ui，后续代码会等待这个saga结束
+
 
 
 ### 编程风格
