@@ -51,7 +51,9 @@ https://commonsware.com/Android/previews/screenshots-and-screen-recordings
         }
       分析
          
-         这个例子中，saga是和业务逻辑相关的，而不是和UI绑定的，应该是saga根据接收的action，觉得下一步需要处理的逻辑，或者下一步UI呈现的状态
+         这个例子中，saga是和业务逻辑相关的，而不是和UI绑定的，
+         应该是saga根据接收的action，决定
+         下一步需要处理的逻辑，或者下一步UI呈现的状态
          
 
 
