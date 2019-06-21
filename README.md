@@ -30,6 +30,13 @@ https://commonsware.com/Android/previews/screenshots-and-screen-recordings
 ### 编程风格
  
  +  悲观性编程 => 考虑失败的场景，边界值，特殊输入，null等
+
+
+### redux
+
+ + redux 中store里存的数据应该和服务端db保持一致， 应该是打散的数据，而非组织好的数据
+
+ + 组织数据应该在selector中处理，ui负责selector 相应需要的数据
     
  
 
