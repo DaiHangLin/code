@@ -30,6 +30,8 @@ https://commonsware.com/Android/previews/screenshots-and-screen-recordings
 ### 编程风格
  
  +  悲观性编程 => 考虑失败的场景，边界值，特殊输入，null等
+ 
+ +  公用的组件或者逻辑，应该一开始就设计好，后期refactor的代价会更大
 
 
 ### redux
