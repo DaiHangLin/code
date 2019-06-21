@@ -25,6 +25,34 @@ https://commonsware.com/Android/previews/screenshots-and-screen-recordings
  +  使用函数来处理UI，使用新特性hook，但是hook应该只和ui的状态有关，不应该处理过多的业务逻辑
  
  +  单一数据来源 =>  不在store中存储两份一样的数据，同样的数据只保留一份，其他应该保留对这份数据的索引
+ 
+ +  业务 和 ui剥离
+  
+     举例：  当进入一个绘画的component后，我们需要在离开component后上传绘画的数据
+     
+        1. yield call(startPaintSaga) 
+
+             =====  等待startPanitSaga 被 cancel 掉 ===== 原因可能是离开component或者点击某个按钮主动上传
+        
+        2. 等待 cancel 掉的action，
+        
+            ===== race { take 1. 离开component  take 2. 主动点击上传}
+            
+        3. yield call(uploadBitmap)
+         
+        
+        4. swict (action) {
+             case '离开component'
+                yield call(....)
+                break
+              case '自动上传'
+                 yield call(....)
+                 break
+        }
+      分析
+         
+         这个例子中，saga是和业务逻辑相关的，而不是和UI绑定的，应该是saga根据接收的action，觉得下一步需要处理的逻辑，或者下一步UI呈现的状态
+         
 
 
 ### 编程风格
