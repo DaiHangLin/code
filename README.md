@@ -55,6 +55,13 @@ https://commonsware.com/Android/previews/screenshots-and-screen-recordings
          应该是saga根据接收的action，决定
          下一步需要处理的逻辑，或者下一步UI呈现的状态
          
+    
+    +  put  vs  call
+    
+       put  =>  put一个action，立马完成，执行下一步
+       
+       call =>  启动一个saga，会block住ui，后续代码会等待这个saga结束
+         
 
 
 ### 编程风格
