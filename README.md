@@ -58,9 +58,25 @@ https://commonsware.com/Android/previews/screenshots-and-screen-recordings
     
     +  put  vs  call
     
-          put  =>  put一个action，立马完成，执行下一步
+          put 
+            
+            put一个action，立马完成，执行下一步
 
-          call =>  启动一个saga，会block住ui，后续代码会等待这个saga结束
+          call 
+           
+            启动一个saga，会block住ui，后续代码会等待这个saga结束
+            
+    +  race
+      
+           race代表同时等待多个action，哪个先到就先处理哪个action,
+           但是比如同时等待 actionA, actionB
+           if (captureActionA) {
+             yield call(doActionAFunc)
+             yield put(actionB) =>  这里一般都是不work的，因为此时的race并没有结束，
+               这里dispatch的action会因为当前的saga还未结束，而无法被处理
+           }
+           
+            
 
 
 
