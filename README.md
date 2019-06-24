@@ -98,6 +98,18 @@ const toUrlEncoded = obj => Object.keys(obj)
  + redux 中store里存的数据应该和服务端db保持一致， 应该是打散的数据，而非组织好的数据
 
  + 组织数据应该在selector中处理，ui负责selector 相应需要的数据
+
+
+
+### react
+
+  + 复杂的UI设计，尽量使用组合，而且嵌套
+  
+  + 每个组件应该尽量的独立，绑定各自需要的selector，react会根据检测selector中的数据是否改变做出更新
+   
+  +  对于不和store关联的纯函数
+     可以从父组件传递数据
+
     
  
 
