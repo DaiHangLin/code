@@ -88,6 +88,9 @@ const toUrlEncoded = obj => Object.keys(obj)
  +  悲观性编程 => 考虑失败的场景，边界值，特殊输入，null等
  
  +  公用的组件或者逻辑，应该一开始就设计好，后期refactor的代价会更大
+ 
+ +  每个function或者说函数，都应该遵循单一指责原则，在项目发展阶段
+     不论是复用还是保持项目中细节上的逻辑保持一致都有好处，而且减少reflactor的机会，减少出错的概率
 
 
 ### redux
