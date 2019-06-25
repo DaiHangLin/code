@@ -109,6 +109,33 @@ const toUrlEncoded = obj => Object.keys(obj)
    
   +  对于不和store关联的纯函数
      可以从父组件传递数据
+     
+     
+### git
+
+   + 分布式版本管理系统，什么是分布式？项目版本不论在任何机器上都有完整的一份数据
+   
+   + git biscet
+   
+         二分查找的方式定位出问题的commit
+         1. git biscet start 开始二分查找
+         2. git biscet good commit-id 指定一个行为正确的commit
+         3. git biscet bad commit-id 指定一个行为错误的commit 默认为最后一个分支
+         4. git biscet good / bad 指定当前commit行为是否正确
+         5. 重复第4步直到找到出问题的commit
+         6. git biscet reset 结束二分查找
+         
+   + git rebase -i HEAD~5
+   
+         交互式处理前5条commit
+         1. git会列出前5条commit和可操作的命令，
+           比如 edit，square，
+         2. 选择 edit，保持退出后之后的修改都会基于这个editting 的 commit
+         3. 编辑结束后 git rebase --continue 结束交互
+
+   + git fetch remote 
+          
+         有些时候远端比如gerrit，创建分支后，客观端 git pull --rebase 却没有拉取新的分支，需要手动fetch下数据
 
     
  
