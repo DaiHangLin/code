@@ -92,6 +92,8 @@ const toUrlEncoded = obj => Object.keys(obj)
  +  每个function或者说函数，都应该遵循单一指责原则，在项目发展阶段
      不论是复用还是保持项目中细节上的逻辑保持一致都有好处，而且减少reflactor的机会，减少出错的概率
 
+ +  注册和销毁应该成对出现，最好在注册前就销毁一次，防止多次注册
+
 
 ### redux
 
