@@ -105,6 +105,8 @@ const toUrlEncoded = obj => Object.keys(obj)
 
  + 组织数据应该在selector中处理，ui负责selector 相应需要的数据
 
+ + redux 中存储的数据不应该是DTO级别的数据，应该是各自待组合数据的mapping关系，DTO应   该由selector来完成
+
 
 
 ### react
