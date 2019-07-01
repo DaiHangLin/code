@@ -144,5 +144,9 @@ const toUrlEncoded = obj => Object.keys(obj)
          有些时候远端比如gerrit，创建分支后，客观端 git pull --rebase 却没有拉取新的分支，需要手动fetch下数据
 
     
- 
+### 基础概念
+
+   + 客户端cookie
+      
+         cookie是在客户端保存登录状态的，cookie和请求发送的域名相关，域名需要一样才会使用相同的cookie，即使是同一个网站及其对应的ip，并不能使用同一个cookie
 
