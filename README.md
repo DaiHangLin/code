@@ -79,7 +79,9 @@ const toUrlEncoded = obj => Object.keys(obj)
                这里dispatch的action会因为当前的saga还未结束，而无法被处理
            }
            
-            
++ 启动和关闭saga
+
+      因为saga如果挂了，会导致整个app无响应，所以启动saga 和 关闭saga应该成对出现，并且按虚启动，在用户退出登录或者某些操作时应该能够关闭不必要的saga
 
 
 
