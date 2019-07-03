@@ -83,6 +83,23 @@ const toUrlEncoded = obj => Object.keys(obj)
 
       因为saga如果挂了，会导致整个app无响应，所以启动saga 和 关闭saga应该成对出现，并且按虚启动，在用户退出登录或者某些操作时应该能够关闭不必要的saga
 
++  saga中对于call的理解
+
+      saga中的call会block住流程，只有call中的saga完成了才会继续执行下一步，
+      所以对于call可以用来做很多事情，
+      
+      比如 可以再tryCatchFinally处理正常结束和被cancel后应该做的事情
+
+      ```
+      finally {
+         if (yield cancelled) {
+            // 被cancel掉了，说明有新的业务分支产生
+         } else {
+            // 业务正常结束
+         }
+      }
+      ```
+
 
 
 ### 编程风格
