@@ -140,6 +140,44 @@ const toUrlEncoded = obj => Object.keys(obj)
    
   +  对于不和store关联的纯函数
      可以从父组件传递数据
+
+  +  react hook
+
+      + useState
+            react里面所有的值应该都是不可变，比如
+            ```
+            const [count, setCount] = useState(0)
+            这里的count是不可变的值，只能通过setCount来修改
+            ```
+      + useEffect
+
+            比class component更加灵活的“监听”
+
+            1. 比如注册和取消注册，在class component里需要在两个相应的生命周期函数里执行，
+            使用useEffect则更加灵活
+            ```
+             useEffect(() => {
+               addListener()
+               return () => {
+                  removeListener
+               }
+             }, [])
+            ```
+            2. 上个例子中的 [] => 表示这个effect只执行一次
+
+            3. useEffect => 会更新当前的所有对象（应该生成新的对象），
+            所以在useEffect的listener里面调用useState可能是不工作的，
+            因为这个时候的useState是更新前旧的引用，需要将useState作为
+            参数传递listenr
+            ```
+             useEffect(() => {
+               addListener()
+               return () => {
+                  removeListener
+               }
+             }, [setCount])
+            ```
+
      
      
 ### git
