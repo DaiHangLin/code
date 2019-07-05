@@ -161,13 +161,14 @@ const toUrlEncoded = obj => Object.keys(obj)
             ```
              useEffect(() => {
                addListener()
-               return () => {
+               return () => { 
                   removeListener
                }
              }, [])
+             //  这里的return返回一个cleanUp的函数，会在组件销毁时执行
             ```
             
-            2. 上个例子中的 [] => 表示这个effect只执行一次
+            2. 上个例子中的 [] => 表示这个effect只执行一次, 分别时在组件mount和unmount时
 
             3. useEffect => 会更新当前的所有对象（应该生成新的对象），
             所以在useEffect的listener里面调用useState可能是不工作的，
@@ -194,6 +195,44 @@ const toUrlEncoded = obj => Object.keys(obj)
                console.log('count 发生了变化')
             }, [count])
             这个时候对于管理count和name是完全独立开的
+            ```
+
+            5. 管理dom组件
+
+            ```
+            import React, { useEffect, useState, useRef } from "react";
+            import ReactDOM from "react-dom";
+
+            function App() {
+            // Store a reference to the input's DOM node
+            const inputRef = useRef();
+
+               // Store the input's value in state
+            const [value, setValue] = useState("");
+
+            useEffect(
+               () => {
+                  // This runs AFTER the first render,
+                  // so the ref is set by now.
+                  console.log("render");
+                  // inputRef.current.focus();
+               },
+                  // The effect "depends on" inputRef
+               [inputRef]
+            );
+
+            return (
+               <input
+                  ref={inputRef}
+                  value={value}
+                  onChange={e => setValue(e.target.value)}
+               />
+            );
+            }
+
+            ReactDOM.render(<App />, document.querySelector("#root"));
+
+            useEffect会监听ref的状态，并且在ref加载时做出相应的处理
             ```
 
 
