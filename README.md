@@ -141,7 +141,9 @@ const toUrlEncoded = obj => Object.keys(obj)
   +  对于不和store关联的纯函数
      可以从父组件传递数据
 
-  +  react hook
+  +  react hook => 应用于新的 function component
+
+         纯函数的组件，所谓的纯函数是指 给定固定的输入肯定能得到相同的输出
 
       + useState
             react里面所有的值应该都是不可变，比如
@@ -149,12 +151,13 @@ const toUrlEncoded = obj => Object.keys(obj)
             const [count, setCount] = useState(0)
             这里的count是不可变的值，只能通过setCount来修改
             ```
-      + useEffect
+      + useEffect 更好的管理组件的状态，能做到很多lifecycle做不到的事
 
             比class component更加灵活的“监听”
 
             1. 比如注册和取消注册，在class component里需要在两个相应的生命周期函数里执行，
             使用useEffect则更加灵活
+            
             ```
              useEffect(() => {
                addListener()
@@ -163,6 +166,7 @@ const toUrlEncoded = obj => Object.keys(obj)
                }
              }, [])
             ```
+            
             2. 上个例子中的 [] => 表示这个effect只执行一次
 
             3. useEffect => 会更新当前的所有对象（应该生成新的对象），
@@ -177,6 +181,21 @@ const toUrlEncoded = obj => Object.keys(obj)
                }
              }, [setCount])
             ```
+
+            4. 在组件和有多个state
+             ```
+             const [count setCount] = useState(0)
+             const [name setName] = useState('1')
+             ```
+               如果当前组件对于count和name的变化需要做出不同的响应，需要怎么做呢
+
+            ```
+            useEffect(() => {
+               console.log('count 发生了变化')
+            }, [count])
+            这个时候对于管理count和name是完全独立开的
+            ```
+
 
      
      
