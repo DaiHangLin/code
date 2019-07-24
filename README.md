@@ -14,7 +14,9 @@ const toUrlEncoded = obj => Object.keys(obj)
    所以修改数据和检测数据其实是异步的，这里使用里第三方的库比如ngZone等，
    数据一直在改变，但是检测周期是固定的
 
-### saga
+### saga // https://www.yuque.com/lovesueee/blog/redux-saga
+ + saga 是一个用于管理应用程序 Side Effect（副作用，例如异步获取数据，访问
+   浏览器缓存等
  + 业务逻辑应该和ui抽离，UI层需要做到不处理具体的业务逻辑
  + 多条业务线 => 同一个业务 => 处理不同业务 (避免进行传值的if else 操作)
    
@@ -121,6 +123,9 @@ const toUrlEncoded = obj => Object.keys(obj)
          
          修改某个状态后，一般都需要在某个时间点恢复至默认状态，比如添加一个flag为true
          后，一定是需要在某个场景下重置为false，给某个数组添加数据后，肯定需要清空
+
+ + workaround 的方法肯定是会有弊端的，该用正确的方法处理就应该按照正确的方法处理
+   否则肯定会在某个时间点需要重新设计，
 
 ### redux
 
@@ -270,4 +275,3 @@ const toUrlEncoded = obj => Object.keys(obj)
    + 客户端cookie
       
          cookie是在客户端保存登录状态的，cookie和请求发送的域名相关，域名需要一样才会使用相同的cookie，即使是同一个网站及其对应的ip，并不能使用同一个cookie
-
