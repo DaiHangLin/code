@@ -275,3 +275,149 @@ const toUrlEncoded = obj => Object.keys(obj)
    + 客户端cookie
       
          cookie是在客户端保存登录状态的，cookie和请求发送的域名相关，域名需要一样才会使用相同的cookie，即使是同一个网站及其对应的ip，并不能使用同一个cookie
+
+
+###  qt quick
+
+   + 隐藏任务栏
+
+      主窗口需要设置为qt.tool
+   
+   + 数据驱动
+      
+      比如修改渐变色，应该 var color = 'red'
+      修改的时候只需要  color = 'green'
+   
+   + mouseArea
+
+      mouseArea可以简单理解为一层透明的view，用来处理事件，所以和代码的层级有关
+
+   + window 
+      - todo
+         关闭窗口
+         点击穿透
+
+### ipcMain ipcRenderer
+
+   + ipcMain (EventEmitter)的一个实例
+
+         从主进程到渲染进程的异步通信
+         It is also possible to send messages from the main process to the renderer process,
+         
+         发送消息时，事件名称为channel。
+         回复同步信息时，需要设置event.returnValue。
+         To send an asynchronous message back to the sender, you can use event.reply(...). This helper method will automatically handle messages coming from frames that aren't the main frame (e.g. iframes) whereas event.sender.send(...) will always send to the main frame.
+
+   ``` js
+      // 在主进程中.
+      const { ipcMain } = require('electron')
+      ipcMain.on('asynchronous-message', (event, arg) => {
+      console.log(arg) // prints "ping"
+      event.reply('asynchronous-reply', 'pong')
+      })
+
+      ipcMain.on('synchronous-message', (event, arg) => {
+      console.log(arg) // prints "ping"
+      event.returnValue = 'pong'
+      })
+   ```
+
+
+   ``` js
+      //在渲染器进程 (网页) 中。
+      const { ipcRenderer } = require('electron')
+      console.log(ipcRenderer.sendSync('synchronous-message', 'ping')) // prints "pong"
+
+      ipcRenderer.on('asynchronous-reply', (event, arg) => {
+      console.log(arg) // prints "pong"
+      })
+      ipcRenderer.send('asynchronous-message', 'ping')
+
+   ```
+
+### saga actionChannel (Effect)
+
+   ``` js
+      import { take, actionChannel, call, ... } from 'redux-saga/effects'
+
+      function* watchRequests() {
+      // 1- Create a channel for request actions
+      const requestChan = yield actionChannel('REQUEST')
+      while (true) {
+         // 2- take from the channel
+         const {payload} = yield take(requestChan)
+         // 3- Note that we're using a blocking call
+         yield call(handleRequest, payload)
+      }
+      }
+
+      function* handleRequest(payload) { ... }
+   ```
+
+   ##### why use saga actionChannel
+
+   +   saga actionChannel will buffer incomming messages, if the saga is not yet ready to take them  (e.g. blocked on an API call)
+
+   +  take 可以接收包了一层redux action的action channel，take会block住saga直到下一条action到达
+
+   + call 会remain blocked until call(fn) return， 如果在blocked的时候接收到下一条action，actionChannel会将这个action存储到queue中，当saga resume的时候，会从queue中取出下一条action进行处理
+
+   + action channel will buffer all incoming messages without limit, and redux-saga provide some common buffers (none, dropping, sliding)
+
+
+### eventChannel 
+
+      create a channell for events but from event sources ither than the redux stroe
+
+   + example
+   ```js
+   import { eventChannel, END } from 'redux-saga'
+
+   function countdown(secs) {
+   return eventChannel(emitter => {
+         const iv = setInterval(() => {
+         secs -= 1
+         if (secs > 0) {
+            emitter(secs)
+         } else {
+            // this causes the channel to close
+            emitter(END)
+         }
+         }, 1000);
+         // The subscriber must return an unsubscribe function
+         return () => {
+         clearInterval(iv)
+         }
+      }
+   )
+   }
+   ```
+
+ + use event channel from saga
+
+ ```js
+
+   import { take, put, call } from 'redux-saga/effects'
+   import { eventChannel, END } from 'redux-saga'
+
+   // creates an event Channel from an interval of seconds
+   function countdown(seconds) { ... }
+
+   export function* saga() {
+      const chan = yield call(countdown, value)
+      try {    
+         while (true) {
+            // take(END) will cause the saga to terminate by jumping to the finally block
+            let seconds = yield take(chan)
+            console.log(`countdown: ${seconds}`)
+         }
+      } finally {
+         console.log('countdown terminated')
+      }
+   }
+
+ ```
+
+ + saga will block when a message is put on the channel
+ + the countdown function close the event channel by invoking  ```emitter(END)``` , teminating ths saga will cause it jump to finally block
+ + suport cancellation
