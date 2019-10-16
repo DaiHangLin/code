@@ -1,0 +1,41 @@
+saga原理
+1. Generator 函数
+  支持手动的暂停，恢复和执行
+2. Effect
+  saga是由一个又一个的Effect组成的。
+  Effect是一个 Plain Object JavaScript 对象，包含一些将被 saga middleware 执行的指令。
+  其中call、put、take都是常见的指令。
+  ```
+  function saga*() {
+    // 1
+    const result = yield call(genPromise);
+    console.log(result);
+  }
+
+  其中第1步并没有真正的去执行genPromise，而是生成一个effect
+   {
+      isEffect: true,
+      type: 'CALL',
+      fn: genPromise
+   }
+   这个effect只是表明了意图，实际由sagaMiddMiddleware执行
+  ```
+3. 生产者与消费者模式
+  ```
+  function *saga() {
+    yield take('TEST');
+    console.log('test...');
+  }
+
+  take会阻塞住saga，直到dispatch({type: 'TEST'})。
+  这里的take实际上是生成一个Effect
+  {
+    isEffect: true,
+    type: 'TAKE',
+    name: 'TEST',
+  }
+
+  sagaMiddleware中的channel在监测到一个take的Effect后，会生成一个任务，并阻塞，直到dispatch一个{type: 'TEST'}
+
+  ```
+  

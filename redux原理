@@ -1,0 +1,35 @@
+redux原理
+
+1. https://upload-images.jianshu.io/upload_images/6548744-df461a22f59ef7da.png?imageMogr2/auto-orient/strip|imageView2/2/w/800/format/webp
+
+2. 三大原则
+
+  - 唯一数据源
+    唯一数据源的意思并不仅仅是将数据存储到store中，而是对于一个object，在store中只能有一份，
+    比如 错误示例
+    people {
+      id: 010012
+      name: 'zhangsan',
+      age: 11,
+    }
+    emploee {
+      peopleId: 010012
+      name： 'lisi'
+    }
+    在sotre中存储的数据，应该只引用people的id，不应该出现name和age，
+      - 已避免读取数据，对于name这个字段和两处来源，不能确定哪份才是唯一的，
+      - 存储刷新数据时，也不能确认具体需要更新的数据源为哪一份
+
+  - 保持只读状态
+    store中的数据是只读的，唯一改变数据的方式是触发action，action即是一个描述行为的对象
+  
+  - 数据改变只能通过纯函数来执行
+    reducer是一个纯函数，接收action和当前的state作业参数，并且返回新的state，reducer必须为一个纯函数。
+    所谓的纯函数即：返回的state由参数state和action唯一决定，而且不产生任何的副作用，也不修改state和action
+
+3. 引申扩展
+  - store中存储哪些类型的数据
+    store中存储的数据应该是和业务相关的
+  - 如何有效的读取数据，防止dom一直更新
+    selector的粒度应该尽量的小，通过组合的方式进行复杂的selector
+
