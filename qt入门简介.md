@@ -1,5 +1,7 @@
 # <center>qt quick 简介</center>
 
+https://note.youdao.com/web/#/file/recent/markdown/WEBca586918e0e7726ebe7e9330769b8676/
+
 ## 背景
 > 为了解决electron在创建多个相对独立的不规则窗体的不足，比如： 
 > 1. 圆形窗体效果不够满意，比如拖拽，点击穿透等
